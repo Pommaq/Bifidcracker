@@ -2,8 +2,8 @@ from Bokstav import *
 from Square import *
 """
 TODO: Add machine learning to the algorithm, where the bifidcracker will utilize a dictionary and make make guesses. 
-After a guess is made, the algorithm will count matches towards the dictionary. 
-The matches with the most hits will be selected, and the algorithm will adapt it's guesses accordingly. 
+After a guess is made, the algorithm will count character matches against the dictionary. 
+The word with the most character matches will be selected, and the algorithm will adapt it's guesses accordingly. 
 """
 class Bifidcracker:
     def __init__(self):
