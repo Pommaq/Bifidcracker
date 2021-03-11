@@ -48,7 +48,7 @@ När vi laddar default-talen så är det nu integrar. dessutom finns en offset p
 Expected result
   1 2 3 4 5
 1 G H O E D
-2 T Q B ? M
+2 T Q B R M
 3 N Z A F W
 4 S Y C K X
 5 J P U V L
