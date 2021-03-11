@@ -1,0 +1,56 @@
+
+bmw -> QAL
+car -> CBF
+gun ->DNN
+suv ->XJF
+the->TGR
+yxa->KZU
+zzz->AZQ
+
+
+Vi börjar med följande polybiuskvadrat:
+  |1|2|3|4|5|
+1 |G|x|O|x|D|
+2 |x|x|x|x|x|
+3 |x|x|x|x|x|
+3 |x|x|x|x|x|
+4 |x|x|x|x|x|
+5 |J|x|U|x|L|
+
+
+där x är utfyllnad för okända tecken. Det är denna kvadrat vi först vill fylla på mha de kända klartexterna och kryptogrammen.
+
+Vi börjar med att titta på gun -> DNN
+    g u n
+rad:1 5 ?
+kol:1 3 ?
+vi ser att n =?1 och 3? så n = 31. Vi noterar även att gun->DNN inte kan ge oss mer information.
+
+Regler vi kan se, såsom algoritmen kommer att se dem:
+row(g) = row(D) // 1
+row(u) = col(D) // 5 => D är satt, D15
+
+row(n) = row(N) // ?
+col(g) = col(N) // 1 => N är inte satt, N?1
+
+col(u) = row(N) // 3
+col(n) = col(N) // ? => N är inte satt, N3?
+
+N kan sättas, ty infon är N?1 och N3? => N blir satt som N31
+
+
+Changelog:
+Fixat bugg i generering av regler, att hålla koll på vilken bokstav i cryptot vi var på mha 'i' fungerar ej, satte separat räknare.
+Fixat bugg i hur vi assignade värden till column vid start, den skapade tidigare en ny medlemsvariabel col (det skulle varit column)
+Vi uppdaterar nu polybiusSquare varje gång vi enforcar en regel.
+När vi laddar default-talen så är det nu integrar. dessutom finns en offset på -1 nu.
+
+Expected result
+  1 2 3 4 5
+1 G H O E D
+2 T Q B ? M
+3 N Z A F W
+4 S Y C K X
+5 J P U V L
+
+R=?3

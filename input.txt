@@ -1,0 +1,7 @@
+gun#DNN
+bmw#QAL
+car#CBF
+suv#XJF
+the#TGR
+yxa#KZU
+zzz#AZQ
