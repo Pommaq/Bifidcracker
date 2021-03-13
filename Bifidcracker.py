@@ -101,6 +101,8 @@ class Bifidcracker:
         CRYPTOGRAM_FILENAME = "cryptogram.txt"
         crypto_file = open(CRYPTOGRAM_FILENAME,"r")
         cryptogram = crypto_file.readline()
+        print(f"The cryptogram was: {cryptogram}\nAttempting decryption..")
+
         pairs = "" 
         plaintext = ""
 
@@ -116,7 +118,7 @@ class Bifidcracker:
                 if int(x)-1 == bokstav.row and int(y)-1 == bokstav.column: # Offset of -1 because the pair is now supposed to be an index value. 
                     plaintext += bokstav.letter
                     
-        print("The plaintext so far is:",plaintext)
+        print("The plaintext is:",plaintext)
         
         
         # H A P P Y N E W Y E A R <- Plaintext
