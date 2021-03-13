@@ -92,6 +92,41 @@ class Bifidcracker:
                     changed = True
             changed = changed | self.polybius.fill()
 
+    def adapt(self):
+        SWE_WORD_FILENAME = "ordlista.txt"
+        words = open(SWE_WORD_FILENAME,"r")
+        pass
+
+    def decrypt(self):
+        CRYPTOGRAM_FILENAME = "cryptogram.txt"
+        crypto_file = open(CRYPTOGRAM_FILENAME,"r")
+        cryptogram = crypto_file.readline()
+        pairs = "" 
+        plaintext = ""
+
+        for c in cryptogram:
+            pairs += str(self.polybius.g_letters[c].row + 1) + str(self.polybius.g_letters[c].column + 1)  # make a str of all the 'pairs' as seen in illustration below
+
+        half = len(pairs)//2 # Will always work because we will always have an even number of 'pairs'.
+        top = pairs[:half]
+        bottom = pairs[half:]
+
+        for x,y in zip(top,bottom):
+            for bokstav in self.polybius.g_letters.values():
+                if int(x)-1 == bokstav.row and int(y)-1 == bokstav.column: # Offset of -1 because the pair is now supposed to be an index value. 
+                    plaintext += bokstav.letter
+                    
+        print("The plaintext so far is:",plaintext)
+        
+        
+        # H A P P Y N E W Y E A R <- Plaintext
+        # 1 3 5 5 4 3 1 3 4 1 3 2 <- Top 
+        # 2 3 2 2 2 1 4 5 2 4 3 4 <- Bottom
+        #
+        # 13 55 43 13 41 32 23 22 21 45 24 34 <- Referenced illustration of pairs
+        #  O  L  C  O  S  Z  B  Q  T  X  R  F
+
+
 
 def main():
     # Skapa alla tomma bokstäver
@@ -103,6 +138,7 @@ def main():
     sys = Bifidcracker()
     sys.conclusion()
     sys.print_square()
+    sys.decrypt()
     return 0
 
 
