@@ -4,6 +4,7 @@ from Square import *
 TODO: Add machine learning to the algorithm, where the bifidcracker will utilize a dictionary and make make guesses. 
 After a guess is made, the algorithm will count character matches against the dictionary. 
 The word with the most character matches will be selected, and the algorithm will adapt it's guesses accordingly. 
+
 """
 class Bifidcracker:
     def __init__(self):
@@ -51,46 +52,53 @@ class Bifidcracker:
                     crypto_letter_index += 1
         return rules
 
+    def checklast(self):
+
+        pass
+
+    def checkRelations(self):
+        # Enforce the rules, format A1=B2
+        changed = False
+        for rule in self.g_rules:
+            row1, col1 = self.polybius.getval(rule[0])
+            row2, col2 = self.polybius.getval(rule[3])
+
+            # Check for discrepancies:
+            if rule[1] == 'r':
+                val1 = row1
+            else:
+                val1 = col1
+            if rule[4] == 'r':
+                val2 = row2
+            else:
+                val2 = col2
+
+            if val1 != "?" and val2 != "?":  # If both rows are set
+                if val1 != val2:  # Happens upon bad input
+                    print("Discrepancy! Rule", rule, "is impossible")
+                    return -1
+                else:
+                    continue
+
+            if val1 != "?" and val2 == "?":
+                if rule[4] == 'r':
+                    self.polybius.setval(rule[3], row=val1)
+                else:
+                    self.polybius.setval(rule[3], col=val1)
+                changed = True
+            elif val1 == "?" and val2 != "?":
+                if rule[1] == 'r':
+                    self.polybius.setval(rule[0], row=val2)
+                else:
+                    self.polybius.setval(rule[0], col=val2)
+                changed = True
+        return changed
     def conclusion(self):
         # Enforces rules and draws conclusions
         changed = True
         while changed:
             changed = False
-            # Enforce the rules, format A1=B2
-            for rule in self.g_rules:
-                row1, col1 = self.polybius.getval(rule[0])
-                row2, col2 = self.polybius.getval(rule[3])
-
-                # Check for discrepancies:
-                if rule[1] == 'r':
-                    val1 = row1
-                else:
-                    val1 = col1
-                if rule[4] == 'r':
-                    val2 = row2
-                else:
-                    val2 = col2
-
-                if val1 != "?" and val2 != "?":  # If both rows are set
-                    if val1 != val2:  # Happens upon bad input
-                        print("Discrepancy! Rule", rule, "is impossible")
-                        return -1
-                    else:
-                        continue
-
-                if val1 != "?" and val2 == "?":
-                    if rule[4] == 'r':
-                        self.polybius.setval(rule[3], row=val1)
-                    else:
-                        self.polybius.setval(rule[3], col=val1)
-                    changed = True
-                elif val1 == "?" and val2 != "?":
-                    if rule[1] == 'r':
-                        self.polybius.setval(rule[0], row=val2)
-                    else:
-                        self.polybius.setval(rule[0], col=val2)
-                    changed = True
-            changed = changed | self.polybius.fill()
+            changed = changed | self.checkRelations() | self.polybius.fill() | self.checklast()
 
 
 def main():
