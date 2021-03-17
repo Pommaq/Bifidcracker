@@ -107,7 +107,7 @@ class Bifidcracker:
         plaintext = ""
 
         for c in cryptogram:
-            pairs += str(self.polybius.g_letters[c].row) + str(self.polybius.g_letters[c].column)  # make a str of all the 'pairs' as seen in illustration below
+            pairs += str(self.polybius.g_letters[c].row) + str(self.polybius.g_letters[c].column)  # make a str of all the 'pairs' as seen in the illustration below
 
         half = len(pairs)//2 # Will always work because we will always have an even number of 'pairs'.
         top = pairs[:half]
@@ -115,8 +115,13 @@ class Bifidcracker:
 
         for x,y in zip(top,bottom):
             for bokstav in self.polybius.g_letters.values():
-                if int(x) == bokstav.row and int(y) == bokstav.column: # Offset of -1 because the pair is now supposed to be an index value. 
-                    plaintext += bokstav.letter
+                
+                try:
+                    if int(x) == bokstav.row and int(y) == bokstav.column: 
+                        plaintext += bokstav.letter
+                except ValueError:
+                    continue
+                
                     
         print("The plaintext is:",plaintext)
         
@@ -127,8 +132,6 @@ class Bifidcracker:
         #
         # 13 55 43 13 41 32 23 22 21 45 24 34 <- Referenced illustration of pairs
         #  O  L  C  O  S  Z  B  Q  T  X  R  F
-
-
 
 def main():
     # Skapa alla tomma bokstäver
