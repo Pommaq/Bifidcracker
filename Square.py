@@ -10,8 +10,8 @@ class Square:
         self.row_metric = [0,0,0,0,0]
         self.column_metric = [0,0,0,0,0]
 
-        r_letters = "abcdefghjklmnopqrstuvwxyzåäö".upper()  # Note that 'i' is missing
-        for letter in r_letters:
+        self.r_letters = "abcdefghjklmnopqrstuvwxyzåäö".upper()  # Note that 'i' is missing
+        for letter in self.r_letters:
             self.g_letters[letter] = Bokstav(letter)
 
         """
@@ -24,6 +24,16 @@ class Square:
         for row in file:
             letter, values = row.split("=")
             self.setval(letter, int(values[0]) - 1, int(values[1]) - 1) # -1 because the rows and columns should be represented as indexes in the given function call.
+
+    def getLastpos(self):
+        """
+        If we have only one spot left in the square, and there is a letter where neither the row or column is set, we have to find what positions it can fit into.
+        :return:
+        """
+        if self.row_metric.count(5) == 4 and self.column_metric.count(5) == 4: # We have only 1 spot left
+            return self.row_metric.index(4), self.column_metric.index(4)
+        else:
+            return (-1, -1)
 
     def setval(self, character, row=-1, col=-1):
         """
