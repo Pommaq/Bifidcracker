@@ -10,7 +10,7 @@ class Square:
         self.row_metric = [0,0,0,0,0]
         self.column_metric = [0,0,0,0,0]
 
-        self.r_letters = "abcdefghjklmnopqrstuvwxyzåäö".upper()  # Note that 'i' is missing
+        self.r_letters = "abcdefghjklmnopqrstuvwxyz".upper()  # Note that 'i' is missing
         for letter in self.r_letters:
             self.g_letters[letter] = Bokstav(letter)
 

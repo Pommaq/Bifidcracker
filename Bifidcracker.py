@@ -59,27 +59,26 @@ class Bifidcracker:
         Used for the special case when there is only one position left in the square and the last letter does not have row or column set.
         :return changed: 
         """
-        emptyletter = "?"
-        failed = False
-        for letter in self.polybius.r_letters:
-            tmp = self.polybius.g_letters[letter]
-            if tmp.column == "?" and tmp.row == "?":
-                if emptyletter != "?":
-                    failed = True
-                    break # Stop
-                emptyletter = tmp.letter
+        row, column = self.polybius.getLastpos()
+        if row != -1:
+            emptyletter = "?"
+            failed = False
+            for letter in self.polybius.r_letters:
+                tmp = self.polybius.g_letters[letter]
+                if tmp.column == "?" and tmp.row == "?":
+                    if emptyletter != "?":
+                        failed = True
+                        break # Stop
+                    emptyletter = tmp.letter
 
-        if not failed:
-            row, column = self.polybius.getLastpos()
-            if row == -1:
-                # Not supposed to happen, we KNOW there is only 1 letter left
-                print("An error has occured in checkLast, We only have one letter left but there is more than one position in the square")
-                exit(-1)
-            self.polybius.g_letters[emptyletter].setval('r', row)
-            self.polybius.g_letters[emptyletter].setval('c', column)
-            return True
-        else:
-            return False
+            if not failed:
+                    # Not supposed to happen, we KNOW there is only 1 letter left
+                self.polybius.g_letters[emptyletter].setval('r', row)
+                self.polybius.g_letters[emptyletter].setval('c', column)
+                return True
+            else:
+                return False
+        return False
 
     def checkRelations(self):
         # Enforce the rules, format A1=B2
@@ -124,6 +123,7 @@ class Bifidcracker:
         changed = True
         while changed:
             changed = self.checkRelations() | self.polybius.fill() | self.checklast()
+
 
     def decrypt(self):
         CRYPTOGRAM_FILENAME = "cryptogram.txt"
