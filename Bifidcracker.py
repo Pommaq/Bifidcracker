@@ -96,7 +96,7 @@ class Bifidcracker:
 
             if val1 != "?" and val2 != "?":  # If both rows are set
                 if val1 != val2:  # Happens upon bad input
-                    print("Discrepancy! Rule", rule, "is impossible")
+                    print("Discrepancy! Rule", rule, "is impossible. Check your input!")
                     return -1
                 else:
                     continue
