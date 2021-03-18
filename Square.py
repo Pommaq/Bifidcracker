@@ -84,6 +84,7 @@ class Square:
             for letter in self.g_letters.values():
                 if letter.row == row and letter.column != "?":
                     spots[letter.column] = True
+
             col_spot = spots.index(False)  # There should now be only 1 index that is free
 
             for i, letter in enumerate(self.g_letters.values()):

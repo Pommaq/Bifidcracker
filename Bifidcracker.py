@@ -73,8 +73,7 @@ class Bifidcracker:
 
             if not failed:
                     # Not supposed to happen, we KNOW there is only 1 letter left
-                self.polybius.g_letters[emptyletter].setval('r', row)
-                self.polybius.g_letters[emptyletter].setval('c', column)
+                self.polybius.setval(emptyletter, row, column)
                 return True
             else:
                 return False
