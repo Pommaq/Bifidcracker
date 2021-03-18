@@ -66,10 +66,8 @@ class Bifidcracker:
             for letter in self.polybius.r_letters:
                 tmp = self.polybius.g_letters[letter]
                 if tmp.column == "?" and tmp.row == "?":
-                    if emptyletter != "?":
-                        failed = True
-                        break # Stop
                     emptyletter = tmp.letter
+                    break
 
             if not failed:
                     # Not supposed to happen, we KNOW there is only 1 letter left
