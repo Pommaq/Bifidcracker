@@ -133,6 +133,10 @@ class Bifidcracker:
         return 0
 
     def decrypt(self):
+        """
+        I believe the name speaks for itself.
+        :return decrypted text:
+        """
         CRYPTOGRAM_FILENAME = "cryptogram.txt"
         crypto_file = open(CRYPTOGRAM_FILENAME, "r")
         cryptogram = crypto_file.readline()
@@ -222,6 +226,9 @@ class Bifidcracker:
         return free
 
     def guess(self):
+        """
+        Picks a letter and guesses its location in the polybiussquare.
+        """
         # Get letters qualified for guessing, make a guess
         qualified = []
         for letter in self.polybius.g_letters.values():
@@ -254,9 +261,12 @@ class Bifidcracker:
                         break
 
 
-
-
 def guessing_game(cracker):
+    """
+    Responsible for making guesses and controlling if they're reasonable. Finishes once a reasonable key is found.
+    :param cracker:
+    :return:
+    """
     plaintext, top, bottom = cracker.decrypt()
     if cracker.polybius.column_metric.count(5) != 5 or cracker.polybius.row_metric.count(5) != 5:
         backup = copy.deepcopy(cracker)  # Used upon failure
@@ -295,12 +305,6 @@ def guessing_game(cracker):
 
 
 def main():
-    # Skapa alla tomma bokstäver
-    # Läs in givna bokstäver
-    # Ta in input->output från fil
-    # Generera regler
-    # Mata in regler samt enforce-a dom.
-    # Försök dra slutsatser
     sys = Bifidcracker()
     sys.conclusion(False)
     plaintext, top, bottom, sys = guessing_game(sys)
