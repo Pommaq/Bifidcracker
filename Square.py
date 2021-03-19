@@ -53,10 +53,10 @@ class Square:
             self.row_metric[int(self.g_letters[character].row)] += 1
             self.column_metric[int(self.g_letters[character].column)] += 1
 
-        if self.row_metric[row] > 5:
-            print("Error, row metric exceeded 5.")
-        if self.column_metric[col] > 5:
-            print("Error, column metric exceeded 5.")
+        # if self.row_metric[row] > 5:
+        #     print("Error, row metric exceeded 5.")
+        # if self.column_metric[col] > 5:
+        #     print("Error, column metric exceeded 5.")
 
         return 0
 
@@ -98,6 +98,7 @@ class Square:
                     freecolumns.remove(col_spot)
                     changed = True
 
+            #C=?2
         for col in freecolumns:
             spots = [False for _ in range(5)]
 
