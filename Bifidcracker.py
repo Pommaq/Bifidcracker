@@ -170,6 +170,35 @@ class Bifidcracker:
         """
         return plaintext, top, bottom
 
+    def encrypt(self, cleartext):
+        """
+        Assumes the polybiussquare is complete.
+        :param cleartext:
+        :return:
+        """
+        cryptogram = ""
+
+        top = ""
+        bottom = ""
+
+        for clear_letter in cleartext.upper():
+            top += str(self.polybius.g_letters[clear_letter].row)
+            bottom += str(self.polybius.g_letters[clear_letter].column)
+
+        all = top + bottom
+
+        while all != "":
+            coords = all[:2]
+            all = all[2:]
+
+            for letter in self.polybius.g_letters.values():
+                if letter.row == int(coords[0]) and letter.column == int(coords[1]):
+                    cryptogram += letter.letter
+
+
+
+        return cryptogram
+
     def print(self, plaintext, top, bottom):
         print("The plaintext is:", plaintext)
         print(" " * 17, top)
@@ -243,22 +272,26 @@ def guessing_game(cracker):
                 result = 0
                 continue
             plaintext, top, bottom = cracker.decrypt()
+            bad = False
             if "?" not in plaintext:
                 for word in open("ordlista.txt"):
                     if word.upper().strip() in plaintext:
                         foundwords = True
-
                 if foundwords:
-                    # Success!
-                    plaintext, top, bottom = cracker.decrypt()
-                    return plaintext, top, bottom, cracker
-            if not foundwords:
+                    # Success! Check so everything encrypts into what we expect
+                    for row in open("input.txt"):
+                        cleartext, cryptogram = row.split('#')
+                        if cracker.encrypt(cleartext) != cryptogram.strip():
+                            # Its a bad square.
+                            bad = True
+                    if not bad:
+                        plaintext, top, bottom = cracker.decrypt()
+                        return plaintext, top, bottom, cracker
+
+            if not foundwords or bad:
                 cracker = copy.deepcopy(backup)
 
     return plaintext, top, bottom, cracker
-
-
-
 
 
 def main():
@@ -273,7 +306,7 @@ def main():
     plaintext, top, bottom, sys = guessing_game(sys)
     sys.print_square()
     sys.print(plaintext, top, bottom)
-    print("""Note: There is a chance this key is faulty (but happened to work on this specific cryptogram)
+    print("""Note: There is a chance this key is faulty (but happened to work on the given cryptograms)
 So keep that in mind when using it. The chances of it being so can be decreased by giving the program more input.""")
     return 0
 
